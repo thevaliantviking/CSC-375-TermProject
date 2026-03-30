@@ -33,11 +33,16 @@ void TeamTrees::insertHelper(Node*& node, const Teams& team)
 {
     if (node == nullptr)
     {
-        node = new Node(team); //creates new node
+        node = new Node(team);
         return;
     }
 
-    if (team.getName() < node->team.getName()) //alphabetical ordering
+    if (team.getName() == node->team.getName()) {
+        std::cout << "Team already exists!\n";
+        return;
+    }
+
+    if (team.getName() < node->team.getName())
         insertHelper(node->left, team);
     else
         insertHelper(node->right, team);

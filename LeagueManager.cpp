@@ -61,9 +61,15 @@ int LeagueManager::getIntegerInput() //gathers user input integer form
             continue;
         }
 
+
         try
         {
-            return std::stoi(input);
+            int value = std::stoi(input);
+            if (value < 0) {
+                std::cout << "Must be positive. Try again: ";
+                continue;
+            }
+            return value;
         }
         catch (...)
         {

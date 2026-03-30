@@ -30,7 +30,10 @@ void Schedule::generate(TeamTrees& tree, int seasonWeeks) //generates weeks with
     tree.fillArray(teamArray, teamCount); //gets teams and sorts them
 
     if (teamCount < 2) //scheduling not possible with less than 2 teams
+    {
+        std::cout << "Error: Need at least 2 teams to generate schedule.\n";  // ← ADD THIS
         return;
+    }
 
     bool hasBye = false;
 

@@ -216,6 +216,11 @@ void Playoff::tryAdvancePlayoffs() //auto advances to next round
 
 void Playoff::generate(TeamTrees& teams, int teamCount)
 {
+    if (generated) {
+        std::cout << "Playoffs already generated!\n";
+        return;
+    }
+
     clear();
 
     Teams* arr[100];
