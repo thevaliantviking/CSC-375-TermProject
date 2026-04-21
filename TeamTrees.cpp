@@ -35,7 +35,7 @@ void TeamTrees::insertHelper(Node*& node, const Teams& team)
     {
         node = new Node(team); //creates new node
     }
-    else if (team.getName() == node->data.getName())
+    else if (team.getName() == node->team.getName())
     {
         std::cout << "Error: Team '" << team.getName() << "' already exists.\n";
         return;
