@@ -59,6 +59,14 @@ private:
     void pause();
     void showChampionScreen();
 
+    void loadTeamsFromFile();
+    void loadScoresFromFile();
+    bool TeamsFile(const std::string& filename);
+    bool ScoresFile(const std::string& filename);
+
+    std::string clean(const std::string& str);
+    bool startsWith(const std::string&str, const std::string& prefix);
+
 public:
     LeagueManager();
     void run();

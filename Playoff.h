@@ -24,7 +24,7 @@ private:
     Game* semifinalGames[2];
     Game* championshipGame;
 
-    void sortTeamsByWins(Teams* arr[], int count);
+    void selectPlayoffTeams(Teams* allTeams[], int totalCount, Teams* selected[], int& selectedCount,int targetCount);
     Teams* getWinner(Game* game);
 
     bool firstRoundComplete();

@@ -55,31 +55,58 @@ void Playoff::clear()
         seeds[i] = nullptr;
 }
 
-void Playoff::sortTeamsByWins(Teams* arr[], int count) //sorts the teams by their wins, points and then differential
+void Playoff::selectPlayoffTeams(Teams* allTeams[], int totalCount, Teams* selected[], int& selectedCount,int targetCount) //function to select playoff
 {
-    for (int i = 0; i < count - 1; i++)
+    bool used[100] = {};     //record teams have already been selected
+    selectedCount = 0;
+
+
+    while (selectedCount < targetCount && selectedCount < totalCount)
     {
-        for (int j = 0; j < count - i - 1; j++)
+        int bestIdx = -1;
+
+
+        for (int i = 0; i < totalCount; i++)    //look for the best team that hasn't been selected yet
         {
-            bool shouldSwap = false;
 
-            if (arr[j]->getWins() < arr[j + 1]->getWins())
-                shouldSwap = true;
-            else if (arr[j]->getWins() == arr[j + 1]->getWins() &&
-                     arr[j]->getPointsFor() < arr[j + 1]->getPointsFor())
-                shouldSwap = true;
-            else if (arr[j]->getWins() == arr[j + 1]->getWins() &&
-                     arr[j]->getPointsFor() == arr[j + 1]->getPointsFor() &&
-                     arr[j]->getPointDifferential() < arr[j + 1]->getPointDifferential())
-                shouldSwap = true;
+            if (used[i])                        //sskip teams that have already been selected
+                continue;
 
-            if (shouldSwap)
+
+            if (bestIdx == -1)                  //if this is the first candidate, select it
             {
-                Teams* temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+                bestIdx = i;
+                continue;
             }
+
+            bool isBetter = false;
+
+            //Compare current team with current best candidate
+
+            //most wins
+            if (allTeams[i]->getWins() > allTeams[bestIdx]->getWins())
+                isBetter = true;
+
+            //highest points scored
+            else if (allTeams[i]->getWins() == allTeams[bestIdx]->getWins() && allTeams[i]->getPointsFor() > allTeams[bestIdx]->getPointsFor())
+                isBetter = true;
+
+            //best point differential
+            else if (allTeams[i]->getWins() == allTeams[bestIdx]->getWins() &&
+                     allTeams[i]->getPointsFor() == allTeams[bestIdx]->getPointsFor() &&
+                     allTeams[i]->getPointDifferential() > allTeams[bestIdx]->getPointDifferential())
+                isBetter = true;
+
+            if (isBetter)   //update the best candidate if current team is better
+                bestIdx = i;
         }
+
+        if (bestIdx == -1)  //no valid team found
+            break;
+
+        selected[selectedCount] = allTeams[bestIdx];    //select this team
+        used[bestIdx] = true;
+        selectedCount++;
     }
 }
 
@@ -216,27 +243,15 @@ void Playoff::tryAdvancePlayoffs() //auto advances to next round
 
 void Playoff::generate(TeamTrees& teams, int teamCount)
 {
-    if (generated) {
-        std::cout << "Playoffs already generated!\n";
-        return;
-    }
-
     clear();
 
     Teams* arr[100];
     int count = 0;
 
     teams.fillArray(arr, count);
-    sortTeamsByWins(arr, count);
 
     playoffTeamCount = teamCount;
-    seedCount = teamCount;
-
-    if (seedCount > count)
-        seedCount = count;
-
-    for (int i = 0; i < seedCount; i++)
-        seeds[i] = arr[i];
+    selectPlayoffTeams(arr, count, seeds, seedCount, teamCount);
 
     if (playoffTeamCount == 8)
     {

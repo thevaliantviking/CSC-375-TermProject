@@ -1,0 +1,62 @@
+// Scores Data File
+// Format:
+// WEEK: week_number
+// GAME: home_team vs away_team
+// SCORE: home_score-away_score
+// HOME_PLAYERS: player_name:points, player_name:points
+// AWAY_PLAYERS: player_name:points, player_name:points
+// Blank line separates games
+
+WEEK: 1
+GAME: Dallas Cowboys vs Pittsburgh Steelers
+SCORE: 32-24
+HOME_PLAYERS: Roger Staubach:6, Emmitt Smith:10, Troy Aikman:4, Micah Parsons:3, CeeDee Lamb:9
+AWAY_PLAYERS: Joe Greene:2, Franco Harris:8, Terry Bradshaw:3, T.J. Watt:5, George Pickens:6
+
+WEEK: 1
+GAME: New England Patriots vs San Francisco 49ers
+SCORE: 38-35
+HOME_PLAYERS: Tom Brady:9, Rob Gronkowski:11, Randy Moss:12, Drake Maye:4, Christian Gonzalez:2
+AWAY_PLAYERS: Joe Montana:7, Jerry Rice:13, Steve Young:5, Christian McCaffrey:6, Brock Purdy:4
+
+WEEK: 1
+GAME: Kansas City Chiefs vs Green Bay Packers
+SCORE: 28-31
+HOME_PLAYERS: Patrick Mahomes:8, Travis Kelce:7, Derrick Thomas:4, Chris Jones:2, Isiah Pacheco:7
+AWAY_PLAYERS: Bart Starr:5, Brett Favre:6, Aaron Rodgers:9, Jordan Love:5, Christian Watson:6
+
+WEEK: 2
+GAME: Pittsburgh Steelers vs New England Patriots
+SCORE: 21-34
+HOME_PLAYERS: Joe Greene:4, Franco Harris:6, Terry Bradshaw:2, T.J. Watt:3, George Pickens:6
+AWAY_PLAYERS: Tom Brady:10, Rob Gronkowski:7, Randy Moss:9, Drake Maye:5, Christian Gonzalez:3
+
+WEEK: 2
+GAME: San Francisco 49ers vs Kansas City Chiefs
+SCORE: 35-24
+HOME_PLAYERS: Joe Montana:9, Jerry Rice:11, Steve Young:6, Christian McCaffrey:5, Brock Purdy:4
+AWAY_PLAYERS: Patrick Mahomes:7, Travis Kelce:6, Derrick Thomas:3, Chris Jones:3, Isiah Pacheco:5
+
+WEEK: 2
+GAME: Green Bay Packers vs Dallas Cowboys
+SCORE: 27-30
+HOME_PLAYERS: Bart Starr:4, Brett Favre:7, Aaron Rodgers:8, Jordan Love:3, Christian Watson:5
+AWAY_PLAYERS: Roger Staubach:7, Emmitt Smith:9, Troy Aikman:2, Micah Parsons:4, CeeDee Lamb:8
+
+WEEK: 3
+GAME: Dallas Cowboys vs New England Patriots
+SCORE: 24-41
+HOME_PLAYERS: Roger Staubach:5, Emmitt Smith:7, Troy Aikman:3, Micah Parsons:2, CeeDee Lamb:7
+AWAY_PLAYERS: Tom Brady:12, Rob Gronkowski:8, Randy Moss:11, Drake Maye:6, Christian Gonzalez:4
+
+WEEK: 3
+GAME: Pittsburgh Steelers vs Kansas City Chiefs
+SCORE: 29-28
+HOME_PLAYERS: Joe Greene:3, Franco Harris:9, Terry Bradshaw:5, T.J. Watt:4, George Pickens:8
+AWAY_PLAYERS: Patrick Mahomes:10, Travis Kelce:8, Derrick Thomas:2, Chris Jones:2, Isiah Pacheco:6
+
+WEEK: 3
+GAME: Green Bay Packers vs San Francisco 49ers
+SCORE: 33-31
+HOME_PLAYERS: Bart Starr:6, Brett Favre:9, Aaron Rodgers:10, Jordan Love:4, Christian Watson:4
+AWAY_PLAYERS: Joe Montana:8, Jerry Rice:10, Steve Young:5, Christian McCaffrey:4, Brock Purdy:4

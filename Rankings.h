@@ -13,9 +13,14 @@ private:
         int playoffPoints;
     };
 
-    void sortTeamsByWins(Teams* arr[], int count);
-    void sortPlayersByRegularPoints(PlayerEntry arr[], int count);
-    void sortPlayersByPlayoffPoints(PlayerEntry arr[], int count);
+    void sortTeamsByWins(Teams* arr[], int left, int right);
+    void mergeTeams(Teams* arr[], int left, int mid, int right);
+
+    void sortPlayersByRegularPoints(PlayerEntry arr[], int left, int right);
+    void mergePlayersByRegularPoints(PlayerEntry arr[], int left, int mid, int right);
+
+    void sortPlayersByPlayoffPoints(PlayerEntry arr[], int left, int right);
+    void mergePlayersByPlayoffPoints(PlayerEntry arr[], int left, int mid, int right);
 
 public:
     void display(TeamTrees& teams);

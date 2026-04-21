@@ -1,63 +1,157 @@
 #include "Rankings.h"
 #include <iostream>
 
-void Rankings::sortTeamsByWins(Teams* arr[], int count) //sorts the teams based on wins of games played
+void Rankings::sortTeamsByWins(Teams* arr[], int left, int right) //function to divide then merge sorted team wins
 {
-    for (int i = 0; i < count - 1; i++)
-    {
-        for (int j = 0; j < count - i - 1; j++)
-        {
-            bool shouldSwap = false;
-
-            if (arr[j]->getWins() < arr[j + 1]->getWins())
-                shouldSwap = true;
-            else if (arr[j]->getWins() == arr[j + 1]->getWins() &&
-                     arr[j]->getPointsFor() < arr[j + 1]->getPointsFor())
-                shouldSwap = true;
-            else if (arr[j]->getWins() == arr[j + 1]->getWins() &&
-                     arr[j]->getPointsFor() == arr[j + 1]->getPointsFor() &&
-                     arr[j]->getPointDifferential() < arr[j + 1]->getPointDifferential())
-                shouldSwap = true;
-
-            if (shouldSwap)
-            {
-                Teams* temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        sortTeamsByWins(arr, left, mid);
+        sortTeamsByWins(arr, mid + 1, right);
+        mergeTeams(arr, left, mid, right);     // combine
     }
 }
 
-void Rankings::sortPlayersByRegularPoints(PlayerEntry arr[], int count) //sorts the players based off regular season points
+
+void Rankings::mergeTeams(Teams* arr[], int left, int mid, int right) //function to sort when merging
 {
-    for (int i = 0; i < count - 1; i++)
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    Teams* L[50]; Teams* R[50];
+    for (int i = 0; i < n1; i++) L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        bool leftFirst = false;
+        if (L[i]->getWins() > R[j]->getWins()) leftFirst = true;
+        else if (L[i]->getWins() == R[j]->getWins() &&
+                 L[i]->getPointsFor() >= R[j]->getPointsFor()) leftFirst = true;
+        arr[k++] = leftFirst ? L[i++] : R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+
+
+void Rankings::sortPlayersByRegularPoints(PlayerEntry arr[], int left, int right) //function to divide then merge sorted players by regular points
+{
+    if (left < right)
     {
-        for (int j = 0; j < count - i - 1; j++)
-        {
-            if (arr[j].regularPoints < arr[j + 1].regularPoints)
-            {
-                PlayerEntry temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
+        int mid = left + (right - left) / 2;
+
+        sortPlayersByRegularPoints(arr, left, mid);         //divides
+        sortPlayersByRegularPoints(arr, mid + 1, right);
+        mergePlayersByRegularPoints(arr, left, mid, right); //combine
     }
 }
 
-void Rankings::sortPlayersByPlayoffPoints(PlayerEntry arr[], int count) //sorts the players based off playoff points
+void Rankings::mergePlayersByRegularPoints(PlayerEntry arr[], int left, int mid, int right) //function to sort when merging
 {
-    for (int i = 0; i < count - 1; i++)
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    PlayerEntry L[250];  //temp left half
+    PlayerEntry R[250];  //temp right half
+
+
+    for (int i = 0; i < n1; i++)    //left and right arrays
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+
+    int i = 0, j = 0, k = left; //array merge back
+
+    while (i < n1 && j < n2)    //sort in decending order
     {
-        for (int j = 0; j < count - i - 1; j++)
+
+        if (L[i].regularPoints >= R[j].regularPoints)
         {
-            if (arr[j].playoffPoints < arr[j + 1].playoffPoints)
-            {
-                PlayerEntry temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
+            arr[k] = L[i];
+            i++;
         }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) //copy the remaining
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void Rankings::sortPlayersByPlayoffPoints(PlayerEntry arr[], int left, int right)   //function to divide then merge sorted players by playoff points
+{
+    if (left < right)
+    {
+        int mid = left + (right - left) / 2;
+
+        sortPlayersByPlayoffPoints(arr, left, mid);         //divides
+        sortPlayersByPlayoffPoints(arr, mid + 1, right);
+        mergePlayersByPlayoffPoints(arr, left, mid, right); //combines
+    }
+}
+
+void Rankings::mergePlayersByPlayoffPoints(PlayerEntry arr[], int left, int mid, int right) //function to sort when merging
+{
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    PlayerEntry L[250];  //temp left half
+    PlayerEntry R[250];  //temp right half
+
+
+    for (int i = 0; i < n1; i++)    //left and right arrays
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+
+    int i = 0, j = 0, k = left; //array merge back
+
+    while (i < n1 && j < n2)    //sort in decending order
+    {
+
+        if (L[i].playoffPoints >= R[j].playoffPoints)
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) //copy the remaining
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
 
@@ -67,7 +161,7 @@ void Rankings::display(TeamTrees& teams)
     int teamCount = 0;
 
     teams.fillArray(teamRankings, teamCount);
-    sortTeamsByWins(teamRankings, teamCount);
+    sortTeamsByWins(teamRankings, 0, teamCount - 1);
 
     std::cout << "\n=== Team Rankings By Wins ===\n";
 
@@ -101,7 +195,7 @@ void Rankings::display(TeamTrees& teams)
         }
     }
 
-    sortPlayersByRegularPoints(players, playerCount);
+    sortPlayersByRegularPoints(players, 0, playerCount - 1);
 
     std::cout << "\n=== Top 5 Players By Regular Season Points ===\n";
 
@@ -114,7 +208,7 @@ void Rankings::display(TeamTrees& teams)
                   << "\n";
     }
 
-    sortPlayersByPlayoffPoints(players, playerCount);
+    sortPlayersByPlayoffPoints(players, 0, playerCount - 1);
 
     std::cout << "\n=== Top 5 Players By Playoff Points ===\n";
 

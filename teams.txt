@@ -1,0 +1,45 @@
+// League Configuration File
+// Format: TEAM: followed by team name, then list player names (one per line)
+// use a blank line to separate teams
+
+TEAM: Dallas Cowboys
+Roger Staubach
+Emmitt Smith
+Troy Aikman
+Micah Parsons
+CeeDee Lamb
+
+TEAM: Pittsburgh Steelers
+Joe Greene
+Franco Harris
+Terry Bradshaw
+T.J. Watt
+George Pickens
+
+TEAM: New England Patriots
+Tom Brady
+Rob Gronkowski
+Randy Moss
+Drake Maye
+Christian Gonzalez
+
+TEAM: San Francisco 49ers
+Joe Montana
+Jerry Rice
+Steve Young
+Christian McCaffrey
+Brock Purdy
+
+TEAM: Kansas City Chiefs
+Patrick Mahomes
+Travis Kelce
+Derrick Thomas
+Chris Jones
+Isiah Pacheco
+
+TEAM: Green Bay Packers
+Bart Starr
+Brett Favre
+Aaron Rodgers
+Jordan Love
+Christian Watson
